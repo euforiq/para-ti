@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Para ti <3 </title>
+  <title>Para ti &lt;3</title>
   <style>
     body {
       background-color: #fff0f5;
@@ -19,7 +19,7 @@
       font-size: 2em;
     }
 
-    #lyric {
+    .text-box {
       font-size: 20px;
       margin-top: 20px;
       color: #333;
@@ -33,25 +33,44 @@
       transition: background-color 0.3s;
     }
 
-    #lyric:hover {
+    .text-box:hover {
       background-color: #ffe6f0;
     }
 
     audio {
       margin-top: 20px;
     }
+
+    #image {
+      margin-top: 40px;
+      max-width: 200px;
+    }
   </style>
 </head>
 <body>
-  <h1>Para ti <3 </h1>
-  <div id="lyric">Presiona play y haz clic aquí para avanzar la letra</div>
+  <h1>Para ti &lt;3</h1>
+  <div id="intro" class="text-box">Haz clic para comenzar...</div>
 
-  <audio controls id="song">
-    <source src="Camila Cabello - Used to This (Audio).mp3" type="audio/mpeg" />
-    Tu navegador no soporta audio.
-  </audio>
+  <div id="mainContent" style="display: none;">
+    <div id="lyric" class="text-box">Presiona play y haz clic aquí para avanzar la letra</div>
+    <audio controls id="song">
+      <source src="Camila Cabello - Used to This (Audio).mp3" type="audio/mpeg" />
+      Tu navegador no soporta audio.
+    </audio>
+    <img id="image" src="parejita.png" alt="Decoración pareja" />
+  </div>
 
   <script>
+    const introLines = [
+      "Hola, mi amor.",
+      "Sé que las cosas no han estado bien y me gustaría poder ayudarte de alguna forma.",
+      "Sé que esto no es un regalo realmente, solo es un detalle.",
+      "Es algo que aprendí a hacer por ti.",
+      "Te dedico esta canción.",
+      "Le hice algunos cambios a la letra... espero puedas encontrarlos jeje.",
+      "Te quiero siempre. 💖"
+    ];
+
     const lyrics = [
       "No, I never liked Santiago",
       "Never thought it was something special",
@@ -123,15 +142,25 @@
       "Gracias por permitirme ser tu novio"
     ];
 
+    let introIndex = 0;
+    const introDiv = document.getElementById("intro");
     const lyricDiv = document.getElementById("lyric");
-    let index = 0;
+    const mainContent = document.getElementById("mainContent");
 
-    lyricDiv.addEventListener("click", () => {
-      if (index < lyrics.length) {
-        lyricDiv.textContent = lyrics[index];
-        index++;
+    introDiv.addEventListener("click", () => {
+      if (introIndex < introLines.length) {
+        introDiv.textContent = introLines[introIndex];
+        introIndex++;
+      } else {
+        introDiv.style.display = "none";
+        mainContent.style.display = "block";
       }
     });
-  </script>
-</body>
-</html>
+
+    let lyricIndex = 0;
+    lyricDiv.addEventListener("click", () => {
+      if (lyricIndex < lyrics.length) {
+        lyricDiv.textContent = lyrics[lyricIndex];
+        lyricIndex++;
+      } else {
+        lyr
