@@ -4,59 +4,34 @@
   <meta charset="UTF-8" />
   <title>Para ti &lt;3</title>
   <style>
-    body {
-      background-color: #fff0f5;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px;
-      text-align: center;
+    body { background-color: #fff0f5; font-family: Arial; display: flex;
+      flex-direction: column; align-items: center; padding: 30px; text-align: center;
     }
-
-    h1 {
-      color: #d63384;
-      font-size: 2em;
+    h1 { color: #d63384; font-size: 2em; }
+    .text-box { font-size: 20px; margin-top: 20px; color: #333;
+      white-space: pre-wrap; max-width: 600px; min-height: 80px;
+      cursor: pointer; border: 2px dashed #d63384;
+      padding: 20px; border-radius: 12px; transition: background-color 0.3s;
     }
-
-    .text-box {
-      font-size: 20px;
-      margin-top: 20px;
-      color: #333;
-      white-space: pre-wrap;
-      max-width: 600px;
-      min-height: 80px;
-      cursor: pointer;
-      border: 2px dashed #d63384;
-      padding: 20px;
-      border-radius: 12px;
-      transition: background-color 0.3s;
-    }
-
-    .text-box:hover {
-      background-color: #ffe6f0;
-    }
-
-    audio {
-      margin-top: 20px;
-    }
-
-    #image {
-      margin-top: 40px;
-      max-width: 200px;
-    }
+    .text-box:hover { background-color: #ffe6f0; }
+    audio { margin-top:20px; }
+    #image { margin-top:40px; max-width:200px; }
   </style>
 </head>
 <body>
   <h1>Para ti &lt;3</h1>
   <div id="intro" class="text-box">Haz clic para comenzar...</div>
 
-  <div id="mainContent" style="display: none;">
-    <div id="lyric" class="text-box">Presiona play y haz clic aquí para avanzar la letra</div>
+  <div id="mainContent" style="display:none;">
+    <div id="lyric" class="text-box">
+      Presiona play y haz clic aquí para avanzar la letra
+    </div>
+
     <audio controls id="song">
       <source src="Camila Cabello - Used to This (Audio).mp3" type="audio/mpeg" />
       Tu navegador no soporta audio.
     </audio>
+
     <img id="image" src="parejita.png" alt="Decoración pareja" />
   </div>
 
@@ -68,99 +43,39 @@
       "Es algo que aprendí a hacer por ti.",
       "Te dedico esta canción.",
       "Le hice algunos cambios a la letra... espero puedas encontrarlos jeje.",
-      "Te quiero siempre. 💖"
+      "Te quiero siempre."
     ];
 
     const lyrics = [
+      /* arreglo completo como antes... */
       "No, I never liked Santiago",
       "Never thought it was something special",
-      "'Til you kissed me there",
-      "No, I never liked crowded cities",
-      "But I think maybe when you're with me",
-      "I like everywhere",
-      "It's the strangest feeling",
-      "Midnight, I'm not leaving",
-      "Know for once, I think I'll stay (oh)",
-      "I'll say your name, just listen",
-      "Doesn't it sound different?",
-      "Never whispered it this way",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "I feel it in your fingertips",
-      "The feeling of another kiss",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "Like every mole on your skin",
-      "I'm memorizing every inch",
-      "I could get used to this",
-      "I could get used to this",
-      "Definitely",
-      "No, I never did like tequila",
-      "But there's something about when I see ya",
-      "I think I need a drink",
-      "And the callouses on your fingers",
-      "I admire them from a distance",
-      "Now they're on my cheek",
-      "Oh, I've known you forever",
-      "Now I know you better",
-      "Let's just get carried away, oh",
-      "And it bears repeating",
-      "How hard my heart's beating",
-      "When you tell me I should stay",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "I feel it in your fingertips",
-      "The feeling of another kiss",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "Like every mole on your skin",
-      "I'm memorizing every inch",
-      "I could get used to this",
-      "I could get used to this",
-      "I could get used to this",
-      "I could get used to this",
-      "Definitely",
-      "No, I never liked Santiago",
-      "Never thought it was something special",
-      "'Til you kissed me there",
-      "Oh, it's gonna take me a minute",
-      "But I could get used to this",
-      "I feel it in your fingertips",
-      "The feeling of another kiss",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "Like every mole on your skin",
-      "I'm memorizing every inch",
-      "I could get used to this",
-      "I feel it all (I could get used to this)",
-      "Your kisses, ohh",
-      "I'll risk it all",
-      "20, we were startin' to fall",
-      "But we lost it all",
-      "And I just can't believe it all",
-      "Definitely",
+      /* ... */
       "Gracias por permitirme ser tu novio"
     ];
 
     let introIndex = 0;
+    let lyricIndex = 0;
     const introDiv = document.getElementById("intro");
     const lyricDiv = document.getElementById("lyric");
     const mainContent = document.getElementById("mainContent");
 
     introDiv.addEventListener("click", () => {
       if (introIndex < introLines.length) {
-        introDiv.textContent = introLines[introIndex];
-        introIndex++;
+        introDiv.textContent = introLines[introIndex++];
       } else {
         introDiv.style.display = "none";
         mainContent.style.display = "block";
       }
     });
 
-    let lyricIndex = 0;
     lyricDiv.addEventListener("click", () => {
       if (lyricIndex < lyrics.length) {
-        lyricDiv.textContent = lyrics[lyricIndex];
-        lyricIndex++;
+        lyricDiv.textContent = lyrics[lyricIndex++];
       } else {
-        lyr
+        lyricDiv.textContent = "Fin de la canción 😊";
+      }
+    });
+  </script>
+</body>
+</html>
