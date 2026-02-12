@@ -19,11 +19,15 @@ body{
     position:absolute;
     width:160px;
     opacity:0;
+    transform:scale(0.8);
     transition:1.5s;
 }
-.visible{ opacity:1; }
+.visible{
+    opacity:1;
+    transform:scale(1);
+}
 
-/* Texto central */
+/* Centro */
 .centro{
     position:absolute;
     top:50%;
@@ -34,7 +38,6 @@ body{
     font-size:28px;
     opacity:0;
     transition:1.5s;
-    z-index:5;
 }
 .visible-text{ opacity:1; }
 
@@ -57,26 +60,14 @@ button{
 #no{
     background:white;
     color:black;
-    position:absolute; /* igual que antes */
+    position:absolute;
 }
 
-/* Meme encima de todo */
+/* Meme */
 #memeImg{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:350px;
+    width:320px;
+    margin-top:20px;
     display:none;
-    z-index:9999;
-}
-
-/* Audio centrado abajo */
-audio{
-    position:fixed;
-    bottom:10px;
-    left:50%;
-    transform:translateX(-50%);
 }
 
 /* Corazones */
@@ -90,30 +81,37 @@ audio{
     100%{transform:translateY(-110vh);}
 }
 
-/* Confeti */
-.confeti{
+/* Fuegos */
+.firework{
     position:fixed;
-    width:8px;
-    height:8px;
-    animation:caer 3s linear forwards;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
 }
-@keyframes caer{
-    0%{transform:translateY(-10vh) rotate(0deg);}
-    100%{transform:translateY(110vh) rotate(720deg);}
+@keyframes explode{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(8);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- FOTOS -->
+<!-- ARRIBA IZQUIERDA -->
 <img src="foto1.jpeg" class="foto" id="f1" style="top:5%; left:5%; transform:rotate(-12deg)">
 <img src="foto2.jpeg" class="foto" id="f2" style="top:18%; left:12%; transform:rotate(-6deg)">
+
+<!-- ARRIBA DERECHA -->
 <img src="foto3.jpeg" class="foto" id="f3" style="top:5%; right:5%; transform:rotate(10deg)">
 <img src="foto4.jpeg" class="foto" id="f4" style="top:18%; right:12%; transform:rotate(6deg)">
+
+<!-- ZONA MEDIA IZQUIERDA -->
 <img src="foto5.jpeg" class="foto" id="f5" style="top:55%; left:5%; transform:rotate(-10deg)">
 <img src="foto6.jpeg" class="foto" id="f6" style="top:65%; left:15%; transform:rotate(8deg)">
 <img src="foto7.jpeg" class="foto" id="f7" style="top:75%; left:25%; transform:rotate(-5deg)">
+
+<!-- ABAJO DERECHA -->
 <img src="foto8.jpeg" class="foto" id="f8" style="bottom:20%; right:5%; transform:rotate(9deg)">
 <img src="foto9.jpeg" class="foto" id="f9" style="bottom:10%; right:18%; transform:rotate(-7deg)">
 <img src="foto10.jpeg" class="foto" id="f10" style="bottom:5%; right:30%; transform:rotate(6deg)">
@@ -134,9 +132,9 @@ Siempre, tú
 ¿Me permites ser tu San Valentín?<br><br>
 <button id="si">SI!!!</button>
 <button id="no">NO!!!</button>
+<br>
+<img src="meme.jpg" id="memeImg">
 </div>
-
-<img src="meme.jpeg" id="memeImg">
 
 <audio id="musica" controls autoplay>
 <source src="chocolate.mp3" type="audio/mp3">
@@ -148,21 +146,53 @@ const noBtn = document.getElementById("no");
 const siBtn = document.getElementById("si");
 let escala = 1;
 
-/* Sincronización más lenta */
+/* Sincronización por grupos */
 musica.addEventListener("timeupdate", function(){
 let t = musica.currentTime;
 
-if(t > 5){ mostrarFotos(); }
-if(t > 9){ letra1.classList.add("visible-text"); } 
-if(t > 24){ letra1.classList.remove("visible-text"); letra2.classList.add("visible-text"); }
-if(t > 32){ letra2.classList.remove("visible-text"); pregunta.classList.add("visible-text"); }
-});
+/* Grupo 1 */
+if(t > 5){
+f1.classList.add("visible");
+f2.classList.add("visible");
+}
 
-function mostrarFotos(){
-for(let i=1;i<=10;i++){
-document.getElementById("f"+i).classList.add("visible");
+/* Grupo 2 */
+if(t > 10){
+f3.classList.add("visible");
+f4.classList.add("visible");
 }
+
+/* Primera letra empieza en segundo 15 */
+if(t > 15){
+letra1.classList.add("visible-text");
 }
+
+/* Grupo 3 */
+if(t > 18){
+f5.classList.add("visible");
+f6.classList.add("visible");
+f7.classList.add("visible");
+}
+
+/* Cambia a Siempre, tú (1 segundo más tarde) */
+if(t > 24){
+letra1.classList.remove("visible-text");
+letra2.classList.add("visible-text");
+}
+
+/* Grupo 4 */
+if(t > 26){
+f8.classList.add("visible");
+f9.classList.add("visible");
+f10.classList.add("visible");
+}
+
+/* Pregunta final (1 segundo más tarde) */
+if(t > 31){
+letra2.classList.remove("visible-text");
+pregunta.classList.add("visible-text");
+}
+});
 
 /* Corazones */
 setInterval(()=>{
@@ -175,7 +205,7 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),8000);
 },500);
 
-/* NO huye (igual que antes) */
+/* Botón NO huye + SI crece */
 function moverNo(){
 let x=Math.random()*(window.innerWidth-120);
 let y=Math.random()*(window.innerHeight-60);
@@ -185,28 +215,29 @@ noBtn.style.top=y+"px";
 escala += 0.2;
 siBtn.style.transform="scale("+escala+")";
 }
+
 noBtn.addEventListener("mouseover", moverNo);
 noBtn.addEventListener("click", moverNo);
 
-/* SI muestra meme y confeti */
+/* Botón SI */
 siBtn.addEventListener("click", ()=>{
+lanzarFuegos();
 document.getElementById("memeImg").style.display="block";
-lanzarConfeti();
 });
 
-/* Confeti */
-function lanzarConfeti(){
-for(let i=0;i<120;i++){
-let c=document.createElement("div");
-c.className="confeti";
-c.style.left=Math.random()*100+"vw";
-c.style.background="hsl("+Math.random()*360+",100%,50%)";
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),3000);
+/* Fuegos */
+function lanzarFuegos(){
+for(let i=0;i<40;i++){
+let f=document.createElement("div");
+f.className="firework";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+f.style.background="hsl("+Math.random()*360+",100%,50%)";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1000);
 }
 }
 </script>
 
 </body>
 </html>
-
