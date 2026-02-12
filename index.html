@@ -63,13 +63,13 @@ button{
     position:absolute;
 }
 
-/* Meme centrado más grande */
+/* Meme */
 #memeImg{
+    width:450px;
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:420px; /* más grande */
     display:none;
     z-index:9999;
 }
@@ -136,9 +136,10 @@ Siempre, tú
 ¿Me permites ser tu San Valentín?<br><br>
 <button id="si">SI!!!</button>
 <button id="no">NO!!!</button>
-<br>
-<img src="meme.jpg" id="memeImg">
 </div>
+
+<!-- Meme -->
+<img src="meme.jpg" id="memeImg">
 
 <audio id="musica" controls autoplay>
 <source src="chocolate.mp3" type="audio/mp3">
@@ -151,32 +152,19 @@ const siBtn = document.getElementById("si");
 const preguntaDiv = document.getElementById("pregunta");
 let escala = 1;
 
-/* Sincronización por grupos */
+/* Sincronización */
 musica.addEventListener("timeupdate", function(){
 let t = musica.currentTime;
 
-/* Grupo 1 */
-if(t > 5){
-f1.classList.add("visible");
-f2.classList.add("visible");
-}
+/* Fotos mantienen sus tiempos originales */
+if(t > 5){ f1.classList.add("visible"); f2.classList.add("visible"); }
+if(t > 10){ f3.classList.add("visible"); f4.classList.add("visible"); }
+if(t > 18){ f5.classList.add("visible"); f6.classList.add("visible"); f7.classList.add("visible"); }
+if(t > 26){ f8.classList.add("visible"); f9.classList.add("visible"); f10.classList.add("visible"); }
 
-/* Grupo 2 */
-if(t > 10){
-f3.classList.add("visible");
-f4.classList.add("visible");
-}
-
-/* Primera letra empieza en 15 */
+/* Primer texto aparece en segundo 15 */
 if(t > 15){
 letra1.classList.add("visible-text");
-}
-
-/* Grupo 3 */
-if(t > 18){
-f5.classList.add("visible");
-f6.classList.add("visible");
-f7.classList.add("visible");
 }
 
 /* Primer texto desaparece en segundo 27 */
@@ -184,20 +172,13 @@ if(t > 27){
 letra1.classList.remove("visible-text");
 }
 
-/* Segunda parte aparece en segundo 29 */
+/* Segundo texto aparece en segundo 29 */
 if(t > 29){
 letra2.classList.add("visible-text");
 }
 
-/* Grupo 4 */
-if(t > 26){
-f8.classList.add("visible");
-f9.classList.add("visible");
-f10.classList.add("visible");
-}
-
 /* Pregunta final */
-if(t > 31){
+if(t > 33){
 letra2.classList.remove("visible-text");
 pregunta.classList.add("visible-text");
 }
@@ -214,15 +195,14 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),8000);
 },500);
 
-/* NO huye pero no se sale */
+/* Botón NO se mueve menos lejos */
 function moverNo(){
-let margen = 100;
-let x = Math.random()*(window.innerWidth - margen - 120);
-let y = Math.random()*(window.innerHeight - margen - 60);
-noBtn.style.left = x+"px";
-noBtn.style.top = y+"px";
+let x=Math.random()*(window.innerWidth-200);
+let y=Math.random()*(window.innerHeight-120);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
 
-escala += 0.2;
+escala += 0.15;
 siBtn.style.transform="scale("+escala+")";
 }
 
@@ -233,10 +213,10 @@ noBtn.addEventListener("click", moverNo);
 siBtn.addEventListener("click", ()=>{
 lanzarFuegos();
 
-/* Oculta todo el bloque de pregunta */
-preguntaDiv.innerHTML = "";
+/* Oculta pregunta y botones */
+preguntaDiv.style.display="none";
 
-/* Muestra meme centrado */
+/* Mostrar meme */
 document.getElementById("memeImg").style.display="block";
 });
 
