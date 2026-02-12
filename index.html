@@ -63,11 +63,15 @@ button{
     position:absolute;
 }
 
-/* Meme */
+/* Meme centrado */
 #memeImg{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     width:320px;
-    margin-top:20px;
     display:none;
+    z-index:9999;
 }
 
 /* Corazones */
@@ -162,7 +166,7 @@ f3.classList.add("visible");
 f4.classList.add("visible");
 }
 
-/* Primera letra empieza en segundo 15 */
+/* Primera letra empieza en 15 */
 if(t > 15){
 letra1.classList.add("visible-text");
 }
@@ -174,8 +178,8 @@ f6.classList.add("visible");
 f7.classList.add("visible");
 }
 
-/* Cambia a Siempre, tú (1 segundo más tarde) */
-if(t > 24){
+/* PRIMER TEXTO dura 1 segundo más (ahora cambia en 25) */
+if(t > 25){
 letra1.classList.remove("visible-text");
 letra2.classList.add("visible-text");
 }
@@ -187,7 +191,7 @@ f9.classList.add("visible");
 f10.classList.add("visible");
 }
 
-/* Pregunta final (1 segundo más tarde) */
+/* Pregunta final */
 if(t > 31){
 letra2.classList.remove("visible-text");
 pregunta.classList.add("visible-text");
@@ -205,12 +209,13 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),8000);
 },500);
 
-/* Botón NO huye + SI crece */
+/* NO huye pero no se va de pantalla */
 function moverNo(){
-let x=Math.random()*(window.innerWidth-120);
-let y=Math.random()*(window.innerHeight-60);
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
+let margen = 100;
+let x = Math.random()*(window.innerWidth - margen - 120);
+let y = Math.random()*(window.innerHeight - margen - 60);
+noBtn.style.left = x+"px";
+noBtn.style.top = y+"px";
 
 escala += 0.2;
 siBtn.style.transform="scale("+escala+")";
@@ -222,6 +227,8 @@ noBtn.addEventListener("click", moverNo);
 /* Botón SI */
 siBtn.addEventListener("click", ()=>{
 lanzarFuegos();
+siBtn.style.display="none";
+noBtn.style.display="none";
 document.getElementById("memeImg").style.display="block";
 });
 
