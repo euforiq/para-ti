@@ -63,13 +63,13 @@ button{
     position:absolute;
 }
 
-/* Meme centrado */
+/* Meme centrado más grande */
 #memeImg{
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:320px;
+    width:420px; /* más grande */
     display:none;
     z-index:9999;
 }
@@ -148,6 +148,7 @@ Siempre, tú
 const musica = document.getElementById("musica");
 const noBtn = document.getElementById("no");
 const siBtn = document.getElementById("si");
+const preguntaDiv = document.getElementById("pregunta");
 let escala = 1;
 
 /* Sincronización por grupos */
@@ -178,9 +179,13 @@ f6.classList.add("visible");
 f7.classList.add("visible");
 }
 
-/* PRIMER TEXTO dura 1 segundo más (ahora cambia en 25) */
-if(t > 25){
+/* Primer texto desaparece en segundo 27 */
+if(t > 27){
 letra1.classList.remove("visible-text");
+}
+
+/* Segunda parte aparece en segundo 29 */
+if(t > 29){
 letra2.classList.add("visible-text");
 }
 
@@ -209,7 +214,7 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),8000);
 },500);
 
-/* NO huye pero no se va de pantalla */
+/* NO huye pero no se sale */
 function moverNo(){
 let margen = 100;
 let x = Math.random()*(window.innerWidth - margen - 120);
@@ -227,8 +232,11 @@ noBtn.addEventListener("click", moverNo);
 /* Botón SI */
 siBtn.addEventListener("click", ()=>{
 lanzarFuegos();
-siBtn.style.display="none";
-noBtn.style.display="none";
+
+/* Oculta todo el bloque de pregunta */
+preguntaDiv.innerHTML = "";
+
+/* Muestra meme centrado */
 document.getElementById("memeImg").style.display="block";
 });
 
