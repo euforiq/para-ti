@@ -1,174 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Para ti &lt;3</title>
-  <style>
-    body {
-      background-color: #fff0f5;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Amor</title>
 
-    h1 {
-      color: #d63384;
-      font-size: 2em;
-    }
+<style>
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+    font-family:'Comic Sans MS', cursive;
+    color:white;
+}
 
-    .text-box {
-      font-size: 20px;
-      margin-top: 20px;
-      color: #333;
-      white-space: pre-wrap;
-      max-width: 600px;
-      min-height: 80px;
-      cursor: pointer;
-      border: 2px dashed #d63384;
-      padding: 20px;
-      border-radius: 12px;
-      transition: background-color 0.3s;
-    }
+/* Fotos */
+.foto{
+    position:absolute;
+    width:160px;
+    opacity:0;
+    transform:scale(0.8);
+    transition:1.5s;
+}
+.visible{
+    opacity:1;
+    transform:scale(1);
+}
 
-    .text-box:hover {
-      background-color: #ffe6f0;
-    }
+/* Centro */
+.centro{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    width:60%;
+    font-size:28px;
+    opacity:0;
+    transition:1.5s;
+}
+.visible-text{ opacity:1; }
 
-    audio {
-      margin-top: 20px;
-    }
+/* Botones */
+button{
+    padding:10px 20px;
+    margin:10px;
+    font-size:20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-    #image {
-      margin-top: 40px;
-      max-width: 200px;
-    }
-  </style>
+#si{
+    background:#ff4d6d;
+    color:white;
+}
+
+#no{
+    background:white;
+    color:black;
+    position:absolute;
+}
+
+/* Meme */
+#memeImg{
+    width:320px;
+    margin-top:20px;
+    display:none;
+}
+
+/* Corazones */
+.corazon{
+    position:fixed;
+    bottom:-20px;
+    animation:flotar 8s linear infinite;
+}
+@keyframes flotar{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-110vh);}
+}
+
+/* Fuegos */
+.firework{
+    position:fixed;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
+}
+@keyframes explode{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(8);opacity:0;}
+}
+</style>
 </head>
+
 <body>
-  <h1>Para ti &lt;3</h1>
-  <div id="message" class="text-box">Haz clic para comenzar...</div>
 
-  <div id="mainContent" style="display: none;">
-    <div id="lyric" class="text-box">Presiona play y haz clic aquí para avanzar la letra</div>
+<!-- ARRIBA IZQUIERDA -->
+<img src="foto1.jpeg" class="foto" id="f1" style="top:5%; left:5%; transform:rotate(-12deg)">
+<img src="foto2.jpeg" class="foto" id="f2" style="top:18%; left:12%; transform:rotate(-6deg)">
 
-    <audio controls id="song">
-      <source src="Camila Cabello - Used to This (Audio).mp3" type="audio/mpeg" />
-      Tu navegador no soporta audio.
-    </audio>
+<!-- ARRIBA DERECHA -->
+<img src="foto3.jpeg" class="foto" id="f3" style="top:5%; right:5%; transform:rotate(10deg)">
+<img src="foto4.jpeg" class="foto" id="f4" style="top:18%; right:12%; transform:rotate(6deg)">
 
-    <img id="image" src="parejita.png" alt="Decoración pareja" />
-  </div>
+<!-- ZONA MEDIA IZQUIERDA -->
+<img src="foto5.jpeg" class="foto" id="f5" style="top:55%; left:5%; transform:rotate(-10deg)">
+<img src="foto6.jpeg" class="foto" id="f6" style="top:65%; left:15%; transform:rotate(8deg)">
+<img src="foto7.jpeg" class="foto" id="f7" style="top:75%; left:25%; transform:rotate(-5deg)">
 
-  <script>
-    const messages = [
-      "Hola, mi amor.",
-      "Sé que las cosas no han estado bien y me gustaría poder ayudarte de alguna forma.",
-      "Sé que esto no es un regalo realmente, solo es un detalle.",
-      "Es algo que aprendí a hacer por ti.",
-      "Te dedico esta canción.",
-      "Le hice algunos cambios a la letra... espero puedas encontrarlos jeje.",
-      "Te quiero siempre. 💖"
-    ];
+<!-- ABAJO DERECHA -->
+<img src="foto8.jpeg" class="foto" id="f8" style="bottom:20%; right:5%; transform:rotate(9deg)">
+<img src="foto9.jpeg" class="foto" id="f9" style="bottom:10%; right:18%; transform:rotate(-7deg)">
+<img src="foto10.jpeg" class="foto" id="f10" style="bottom:5%; right:30%; transform:rotate(6deg)">
 
-    const lyrics = [
-      "No, I never liked Santiago",
-      "Never thought it was something special",
-      "'Til you kissed me there",
-      "No, I never liked crowded cities",
-      "But I think maybe when you're with me",
-      "I like everywhere",
-      "It's the strangest feeling",
-      "Midnight, I'm not leaving",
-      "Know for once, I think I'll stay (oh)",
-      "I'll say your name, just listen",
-      "Doesn't it sound different?",
-      "Never whispered it this way",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "I feel it in your fingertips",
-      "The feeling of another kiss",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "Like every mole on your skin",
-      "I'm memorizing every inch",
-      "I could get used to this",
-      "I could get used to this",
-      "Definitely",
-      "No, I never did like tequila",
-      "But there's something about when I see ya",
-      "I think I need a drink",
-      "And the callouses on your fingers",
-      "I admire them from a distance",
-      "Now they're on my cheek",
-      "Oh, I've known you forever",
-      "Now I know you better",
-      "Let's just get carried away, oh",
-      "And it bears repeating",
-      "How hard my heart's beating",
-      "When you tell me I should stay",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "I feel it in your fingertips",
-      "The feeling of another kiss",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "Like every mole on your skin",
-      "I'm memorizing every inch",
-      "I could get used to this",
-      "I could get used to this",
-      "I could get used to this",
-      "I could get used to this",
-      "Definitely",
-      "No, I never liked Santiago",
-      "Never thought it was something special",
-      "'Til you kissed me there",
-      "Oh, it's gonna take me a minute",
-      "But I could get used to this",
-      "I feel it in your fingertips",
-      "The feeling of another kiss",
-      "It's gonna take me a minute",
-      "But I could get used to this",
-      "Like every mole on your skin",
-      "I'm memorizing every inch",
-      "I could get used to this",
-      "I feel it all (I could get used to this)",
-      "Your kisses, ohh",
-      "I'll risk it all",
-      "20, we were startin' to fall",
-      "But we lost it all",
-      "And I just can't believe it all",
-      "Definitely",
-      "Gracias por permitirme ser tu novio"
-    ];
+<!-- LETRAS -->
+<div class="centro" id="letra1">
+Tú, endulzas mi canción,<br>
+le das un buen sabor,<br>
+a cada situación
+</div>
 
-    const messageBox = document.getElementById("message");
-    const mainContent = document.getElementById("mainContent");
-    const lyricBox = document.getElementById("lyric");
+<div class="centro" id="letra2">
+Siempre, tú
+</div>
 
-    let messageIndex = 0;
-    let lyricIndex = 0;
+<!-- PREGUNTA -->
+<div class="centro" id="pregunta">
+¿Me permites ser tu San Valentín?<br><br>
+<button id="si">SI!!!</button>
+<button id="no">NO!!!</button>
+<br>
+<img src="meme.jpeg" id="memeImg">
+</div>
 
-    messageBox.addEventListener("click", () => {
-      if (messageIndex < messages.length) {
-        messageBox.textContent = messages[messageIndex];
-        messageIndex++;
-      } else {
-        messageBox.style.display = "none";
-        mainContent.style.display = "block";
-      }
-    });
+<audio id="musica" controls autoplay>
+<source src="chocolate.mp3" type="audio/mp3">
+</audio>
 
-    lyricBox.addEventListener("click", () => {
-      if (lyricIndex < lyrics.length) {
-        lyricBox.textContent = lyrics[lyricIndex];
-        lyricIndex++;
-      } else {
-        lyricBox.textContent = "💖 Fin de la canción 💖";
-      }
-    });
-  </script>
+<script>
+const musica = document.getElementById("musica");
+const noBtn = document.getElementById("no");
+const siBtn = document.getElementById("si");
+let escala = 1;
+
+/* Sincronización por grupos */
+musica.addEventListener("timeupdate", function(){
+let t = musica.currentTime;
+
+/* Grupo 1 */
+if(t > 5){
+f1.classList.add("visible");
+f2.classList.add("visible");
+}
+
+/* Grupo 2 */
+if(t > 10){
+f3.classList.add("visible");
+f4.classList.add("visible");
+}
+
+/* Aparece primera letra */
+if(t > 14){
+letra1.classList.add("visible-text");
+}
+
+/* Grupo 3 */
+if(t > 18){
+f5.classList.add("visible");
+f6.classList.add("visible");
+f7.classList.add("visible");
+}
+
+/* Cambia a Siempre, tú */
+if(t > 23){
+letra1.classList.remove("visible-text");
+letra2.classList.add("visible-text");
+}
+
+/* Grupo 4 */
+if(t > 26){
+f8.classList.add("visible");
+f9.classList.add("visible");
+f10.classList.add("visible");
+}
+
+/* Pregunta final */
+if(t > 30){
+letra2.classList.remove("visible-text");
+pregunta.classList.add("visible-text");
+}
+});
+
+/* Corazones */
+setInterval(()=>{
+let c=document.createElement("div");
+c.className="corazon";
+c.style.left=Math.random()*100+"vw";
+c.style.fontSize=(15+Math.random()*20)+"px";
+c.innerHTML="❤️";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),8000);
+},500);
+
+/* Botón NO huye + SI crece */
+function moverNo(){
+let x=Math.random()*(window.innerWidth-120);
+let y=Math.random()*(window.innerHeight-60);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+escala += 0.2;
+siBtn.style.transform="scale("+escala+")";
+}
+
+noBtn.addEventListener("mouseover", moverNo);
+noBtn.addEventListener("click", moverNo);
+
+/* Botón SI */
+siBtn.addEventListener("click", ()=>{
+lanzarFuegos();
+document.getElementById("memeImg").style.display="block";
+});
+
+/* Fuegos */
+function lanzarFuegos(){
+for(let i=0;i<40;i++){
+let f=document.createElement("div");
+f.className="firework";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+f.style.background="hsl("+Math.random()*360+",100%,50%)";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1000);
+}
+}
+</script>
+
 </body>
 </html>
+
